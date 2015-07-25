@@ -1,0 +1,22 @@
+{
+  "name": "quick_q",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'I need tests!'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RebootJeff/quickQ.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/RebootJeff/quickQ/issues"
+  },
+  "homepage": "https://github.com/RebootJeff/quickQ#readme",
+  "dependencies": {
+    "bower": "^1.4.1"
+  }
+}

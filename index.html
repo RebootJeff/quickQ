@@ -6,12 +6,25 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
   </head>
 
-  <body ng-controller="MainCtrl as main">
+  <body ng-controller="MainCtrl as ctrl">
 
     <md-input-container flex>
       <label>Question</label>
-      <input ng-model="main.question">
+      <input ng-model="ctrl.question" required>
     </md-input-container>
+
+    <md-select placeholder="Type" ng-model="ctrl.type" required>
+      <md-option ng-repeat="choiceType in ctrl.CHOICE_TYPES" value="{{choiceType}}">{{choiceType}}</md-option>
+    </md-select>
+
+    <md-input-container ng-repeat="choice in ctrl.choices" flex>
+      <label>Choice #{{$index + 1}} text</label>
+      <input ng-model="choice.text">
+    </md-input-container>
+
+    <md-button class="md-raised" ng-click="ctrl.addChoice()">Add Choice</md-button>
+    <md-button class="md-raised md-primary" ng-click="ctrl.submit()">Save Q</md-button>
+
 
     <!-- 3rd party dependencies -->
     <script src="bower_components/angular/angular.js"></script>

@@ -3,18 +3,25 @@ angular.module('app', [
   'firebase'
 ]);
 
-angular.module('app').controller('MainCtrl', function($firebaseObject) {
+angular.module('app').controller('MainCtrl', function($q, Poll, Choices) {
+  'use strict';
   var ctrl = this;
 
-  var FIREBASE_URL = 'https://flickering-torch-1679.firebaseio.com/poll';
-  var ref = new Firebase(FIREBASE_URL);
+  $q.all([
+    Poll.$loaded(),
+    Choices.$loaded()
+  ])
+  .then(initialize);
 
-  var poll = $firebaseObject(ref);
+  function initialize() {
+    ctrl.question = Poll.question || '';
+    ctrl.type = Poll.type;
 
-  poll.$loaded().then(function() {
-    ctrl.question = poll.question || '';
-    ctrl.choices = poll.choices || [{}];
-  });
+    if(Choices.length === 0) {
+      Choices.$add({text: ''});
+    }
+    ctrl.choices = Choices;
+  }
 
   ctrl.CHOICE_TYPES = [
     'checkboxes',
@@ -22,13 +29,18 @@ angular.module('app').controller('MainCtrl', function($firebaseObject) {
   ];
 
   ctrl.addChoice = function() {
-    ctrl.choices.push({});
+    Choices.$add({text: ''});
+  };
+
+  ctrl.removeChoice = function(index) {
+    Choices.$remove(index);
   };
 
   ctrl.submit = function() {
-    console.log('poll:', poll);
-    poll.question = ctrl.question;
-    poll.choices = ctrl.choices;
-    poll.$save();
+    Poll.question = ctrl.question;
+    Poll.type = ctrl.type;
+
+    Poll.$save();
+    Choices.saveAll();
   };
 });

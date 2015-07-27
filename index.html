@@ -8,23 +8,27 @@
 
   <body ng-controller="MainCtrl as ctrl">
 
-    <md-input-container flex>
-      <label>Question</label>
-      <input ng-model="ctrl.question" required>
-    </md-input-container>
+    <form name="editPollForm">
+      <md-input-container flex>
+        <label>Question</label>
+        <input ng-model="ctrl.question" required>
+      </md-input-container>
 
-    <md-select placeholder="Type" ng-model="ctrl.type" required>
-      <md-option ng-repeat="choiceType in ctrl.CHOICE_TYPES" value="{{choiceType}}">{{choiceType}}</md-option>
-    </md-select>
+      <md-select placeholder="Type" ng-model="ctrl.type" required>
+        <md-option ng-repeat="choiceType in ctrl.CHOICE_TYPES" value="{{choiceType}}">{{choiceType}}</md-option>
+      </md-select>
 
-    <md-input-container ng-repeat="choice in ctrl.choices" flex>
-      <label>Choice #{{$index + 1}} text</label>
-      <input ng-model="choice.text">
-    </md-input-container>
+      <section ng-repeat="choice in ctrl.choices" layout="row" layout-sm="column">
+        <md-input-container flex="90">
+          <label>Choice #{{$index + 1}} text</label>
+          <input ng-model="choice.text" required>
+        </md-input-container>
+        <md-button class="md-raised" ng-click="ctrl.removeChoice($index)">X</md-button>
+      </section>
 
-    <md-button class="md-raised" ng-click="ctrl.addChoice()">Add Choice</md-button>
-    <md-button class="md-raised md-primary" ng-click="ctrl.submit()">Save Q</md-button>
-
+      <md-button class="md-raised" ng-click="ctrl.addChoice()">Add Choice</md-button>
+      <md-button class="md-raised md-primary" ng-click="ctrl.submit()" ng-disabled="editPollForm.$invalid">Save Q</md-button>
+    </form>
 
     <!-- 3rd party dependencies -->
     <script src="bower_components/angular/angular.js"></script>
@@ -36,6 +40,8 @@
 
     <!-- App scripts -->
     <script src="js/app.js"></script>
+    <script src="js/pollSvc.js"></script>
+    <script src="js/choicesSvc.js"></script>
 
   </body>
 

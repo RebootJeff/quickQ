@@ -2,33 +2,37 @@
 
 <html ng-app="app">
   <head>
+    <meta name="viewport" content="width=device-width">
     <title>Quick Q</title>
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
   </head>
 
   <body ng-controller="MainCtrl as ctrl">
+    <md-content layout="row" layout-align="center start">
 
-    <form name="editPollForm">
-      <md-input-container flex>
-        <label>Question</label>
-        <input ng-model="ctrl.question" required>
-      </md-input-container>
-
-      <md-select placeholder="Type" ng-model="ctrl.type" required>
-        <md-option ng-repeat="choiceType in ctrl.CHOICE_TYPES" value="{{choiceType}}">{{choiceType}}</md-option>
-      </md-select>
-
-      <section ng-repeat="choice in ctrl.choices" layout="row" layout-sm="column">
-        <md-input-container flex="90">
-          <label>Choice #{{$index + 1}} text</label>
-          <input ng-model="choice.text" required>
+      <form name="editPollForm" flex-sm="90" flex="66">
+        <md-input-container flex>
+          <label>Question</label>
+          <input ng-model="ctrl.question" required>
         </md-input-container>
-        <md-button class="md-raised" ng-click="ctrl.removeChoice($index)">X</md-button>
-      </section>
 
-      <md-button class="md-raised" ng-click="ctrl.addChoice()">Add Choice</md-button>
-      <md-button class="md-raised md-primary" ng-click="ctrl.submit()" ng-disabled="editPollForm.$invalid">Save Q</md-button>
-    </form>
+        <md-select placeholder="Type" ng-model="ctrl.type" required>
+          <md-option ng-repeat="choiceType in ctrl.CHOICE_TYPES" value="{{choiceType}}">{{choiceType}}</md-option>
+        </md-select>
+
+        <section ng-repeat="choice in ctrl.choices" layout="row">
+          <md-input-container flex="70">
+            <label>Choice #{{$index + 1}} text</label>
+            <input ng-model="choice.text" required>
+          </md-input-container>
+          <md-button ng-click="ctrl.removeChoice($index)">X</md-button>
+        </section>
+
+        <md-button class="md-raised" ng-click="ctrl.addChoice()">Add Choice</md-button>
+        <md-button class="md-raised md-primary" ng-click="ctrl.submit()" ng-disabled="editPollForm.$invalid">Save Q</md-button>
+      </form>
+
+    </md-content>
 
     <!-- 3rd party dependencies -->
     <script src="bower_components/angular/angular.js"></script>
